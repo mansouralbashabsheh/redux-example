@@ -1,28 +1,62 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import {connect}from 'react-redux'
 import './App.css';
 
 class App extends Component {
+   state = { 
+    count : 0
+  }
+
+ increase = ( ) =>{
+    this.setState({
+      count:this.state.count+1
+    })
+
+  }
+
+  
+decrease = ( ) =>{
+    this.setState({count:this.state.count+1})
+
+  }
   render() {
+   console.log(this.props)
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+   <div class="container-buttons">
+
+ <h1> Increase & Decrease using Redux </h1>
+  <button className="btn" onClick={this.props.increase}> +</button>
+   <div className="result"> {this.props.count}</div>
+      
+  <button className="btn" onClick={this.props.decrease}> -</button>
+  </div>
+     </div>
     );
   }
+
+
+
 }
 
-export default App;
+function mapStateToProps (state){
+   return {
+     count:state.count
+   } 
+}
+
+const action1 ={
+  type:'INCREASE'
+}
+
+const action2 ={
+  type:'DECREASE'
+}
+function mapDispatchToProps (dispatch){
+  return {
+    increase : () => dispatch(action1),
+    decrease : () => dispatch(action2)
+  }
+
+}
+export default connect(mapStateToProps , mapDispatchToProps)(App);
